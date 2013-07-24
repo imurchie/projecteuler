@@ -2,14 +2,28 @@
 # encoding: utf-8
 
 
-def is_prime?(n)
-  2.upto(Math::sqrt(n)) { |i| return false if n % i == 0 }
-  true
+# answer: 142913828922
+#         
+
+
+
+def sum_primes(num)
+  nums = Hash.new{true}
+
+  (2...num**(0.5)).each do |x|
+    if nums[x]
+      i = x
+      while x*i < num
+        nums[x*i] = false
+        i += 1
+      end
+    end
+  end
+  
+  sum = 0
+  (2...num).each { |x| sum += x if nums[x] }
+  sum
 end
 
-
-sum = 2
-
-3.upto(2_000_000) { |i| sum += i if is_prime?(i) }
-
-p sum
+puts sum_primes(2_000_000)
+exit
